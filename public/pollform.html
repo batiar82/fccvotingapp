@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Clementine.js - The elegant and lightweight full stack JavaScript boilerplate.</title>
+		
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<header>
+		<p>Welcome, <span id="display-name"></span>!</p>
+		<a class="menu" href="/">Home</a>
+		<p>|</p>
+		<a class="menu" href="/mypolls">My Polls</a>
+		<p>|</p>
+		<a class="menu" href="/profile">Profile</a>
+		<p>|</p>
+		<a class="menu" href="/logout">Logout</a>
+	</header>
+
+	<body>
+		<div class="container">
+			<img src="/public/img/clementine_150.png" />
+			<br />
+			<p class="clementine-text">Clementine.js</p>
+		</div>
+	
+		<div class="container">
+			<form action="/api/:id/polls" method="post">
+				<input type="text" name="question"/>
+				<input type="textarea" name="options"/>
+				<input type="submit" value="Submit" class="btn btn-add">
+			</form>
+		</div>
+		
+		<script type="text/javascript" src="common/ajax-functions.js"></script>
+		<script type="text/javascript" src="controllers/clickController.client.js"></script>
+		<script type="text/javascript" src="controllers/userController.client.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	</body>
+
+</html>

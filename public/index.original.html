@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Clementine.js - The elegant and lightweight full stack JavaScript boilerplate.</title>
+		
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<header>
+		<p>Welcome, <span id="display-name"></span>!</p>
+		<a class="menu" href="/">Home</a>
+		<p>|</p>
+		<a class="menu" href="/mypolls">My Polls</a>
+		<p>|</p>
+		<a class="menu" href="/profile">Profile</a>
+		<p>|</p>
+		<a class="menu" href="/logout">Logout</a>
+	</header>
+
+	<body>
+		<div class="container">
+			<img src="/public/img/clementine_150.png" />
+			<br />
+			<p class="clementine-text">Clementine.js</p>
+		</div>
+	
+		<div class="container">
+			<div class="btn-container">
+				<a href="/addPoll" class="btn btn-add">Add Poll!</a>
+				
+			</div>
+		</div>
+		<div class="container">
+			<h2>Below are polls hosted by fcc-voting.<br />
+			Select a poll to see the results and vote, or sign-in to make a new poll.</h3>
+			<span id="polls-table"></span>
+			
+		</div>
+		<script type="text/javascript" src="common/ajax-functions.js"></script>
+		<!--<script type="text/javascript" src="controllers/clickController.client.js"></script>-->
+		<script type="text/javascript" src="controllers/userController.client.js"></script>
+		<script type="text/javascript" src="controllers/pollController.client.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	</body>
+
+</html>
