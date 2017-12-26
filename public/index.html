@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% set title = 'FCC Voting App' %}
 {% extends '_layout.html' %}
-	<body>
+
 		{% block content %}
 		<div class="container">
 			<div class="btn-container">
@@ -12,10 +12,10 @@
 		<div class="container">
 			<h2>Below are polls hosted by fcc-voting.<br />
 			Select a poll to see the results and vote, or sign-in to make a new poll.</h3>
-			<span id="polls-table"></span>
-			
+			<ul>
+				{% for poll in polls %}
+				<li><a href="/poll/{{poll._id}}">{{poll.question}}</a></li>
+				{%endfor%}
+			</ul>
 		</div>
 		{% endblock %}
-	</body>
-
-</html>

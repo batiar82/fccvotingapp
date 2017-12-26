@@ -8,7 +8,8 @@ module.exports = function (app, passport) {
 
 	function isLoggedIn (req, res, next) {
 		if (req.isAuthenticated()) {
-			res.locals.auth="true";
+			console.log("Entro a poner el true en auth");
+			app.locals.auth="true";
 			return next();
 		} else {
 			res.redirect('/login');
@@ -19,10 +20,8 @@ module.exports = function (app, passport) {
 	var pollHandler = new PollHandler();
 
 	app.route('/')
-		.get(function (req, res) {
+		.get(pollHandler.getPolls)
 			//res.sendFile(path + '/public/index.html');
-			res.render('index.html');
-		});
 
 	app.route('/login')
 		.get(function (req, res) {
@@ -32,7 +31,7 @@ module.exports = function (app, passport) {
 	app.route('/logout')
 		.get(function (req, res) {
 			req.logout();
-			res.redirect('/login');
+			res.redirect('/');
 		});
 
 	app.route('/profile')
@@ -57,7 +56,7 @@ module.exports = function (app, passport) {
 	app.route('/addpoll')
 		.get(isLoggedIn, function (req, res) {
 			console.log("Llaman al form de Polls");
-			res.sendFile(path + '/public/pollform.html');
+			res.render('pollform.html');
 		});
 	app.route('/api/:id/polls')
 		.get(pollHandler.getPolls)

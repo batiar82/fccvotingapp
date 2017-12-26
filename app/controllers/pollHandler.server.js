@@ -10,7 +10,7 @@ function PollHandler () {
 		Polls
 			.find({}).exec(function(err, polls) {
 				if (err) { throw err; }
-				res.json(polls);
+				res.render('index.html',{polls: polls});
 			});
 	};
 

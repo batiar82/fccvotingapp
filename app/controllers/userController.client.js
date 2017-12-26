@@ -6,6 +6,7 @@
    var profileUsername = document.querySelector('#profile-username') || null;
    var profileRepos = document.querySelector('#profile-repos') || null;
    var displayName = document.querySelector('#display-name');
+   var navBar = document.querySelector('.isLoggedIn');
    var apiUrl = appUrl + '/api/:id';
 
    function updateHtmlElement (data, element, userProperty) {
@@ -17,8 +18,12 @@
 
       if (userObject.displayName !== null) {
          updateHtmlElement(userObject, displayName, 'displayName');
+         console.log("Mando diplay");
+         navBar.style.display = 'block';
       } else {
          updateHtmlElement(userObject, displayName, 'username');
+         console.log("saco diplay");
+         navBar.style.display = 'none';
       }
 
       if (profileId !== null) {
