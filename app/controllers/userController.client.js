@@ -1,42 +1,21 @@
 'use strict';
 
-(function () {
-
-   var profileId = document.querySelector('#profile-id') || null;
-   var profileUsername = document.querySelector('#profile-username') || null;
-   var profileRepos = document.querySelector('#profile-repos') || null;
-   var displayName = document.querySelector('#display-name');
-   var navBar = document.querySelector('.isLoggedIn');
-   var apiUrl = appUrl + '/api/:id';
 
    function updateHtmlElement (data, element, userProperty) {
-      element.innerHTML = data[userProperty];
+      element.text(data[userProperty]);
    }
 
-   ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
-      var userObject = JSON.parse(data);
-
-      if (userObject.displayName !== null) {
-         updateHtmlElement(userObject, displayName, 'displayName');
-         console.log("Mando diplay");
-         navBar.style.display = 'block';
-      } else {
-         updateHtmlElement(userObject, displayName, 'username');
-         console.log("saco diplay");
-         navBar.style.display = 'none';
-      }
-
-      if (profileId !== null) {
-         updateHtmlElement(userObject, profileId, 'id');   
-      }
-
-      if (profileUsername !== null) {
-         updateHtmlElement(userObject, profileUsername, 'username');   
-      }
-
-      if (profileRepos !== null) {
-         updateHtmlElement(userObject, profileRepos, 'publicRepos');   
-      }
-
-   }));
-})();
+   $( document ).ready(function() {
+      
+    console.log( "ready!" );
+    var displayName = $('#display-name');
+   var navBar = $('.isLoggedIn');
+   var apiUrl = '/api/:id';
+   
+    $.get(apiUrl,function(data){
+       if (data.displayName !== null) 
+         displayName.text(data.displayName);
+      else
+         displayName.text(data.username);
+    });
+});

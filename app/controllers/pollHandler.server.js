@@ -15,12 +15,16 @@ function PollHandler () {
 	};
 
 	this.addPoll = function (req, res) {
-		console.log("Me piden crear un nuevo poll: "+req.user.github.id+" question: "+req.body.question+" options: "+req.body.options);
+		console.log("es array: "+Array.isArray(req.body.option));
+		console.log("Separo "+req.body.option.length);
+		console.log("Me piden crear un nuevo poll: "+req.user.github.id+" question: "+req.body.question+" options: "+req.body.option+" req option: "+req.option);
 		var newPoll = new Polls();
 					
 					newPoll._creator = req.user.github.id;
 					newPoll.question = req.body.question;
-					newPoll.options = req.body.options.split(" ");
+					newPoll.options = req.body.option;
+					//Borro el ultimo que viene vacio, habria que sacarlo y que directamente no lo mande el form
+					newPoll.options.pop();
 					newPoll.options.forEach(function(item,index){
 						newPoll.votes.push(0);
 					});
@@ -28,11 +32,12 @@ function PollHandler () {
 						if (err) {
 							throw err;
 						}
-						res.json(newPoll);
+						res.redirect('/');
 					});
 	};
 
 	this.addOption = function (req, res) {
+		console.log("Body: "+req.body+"  "+req.body.option+" req option: "+req.option);
 		Polls
 			.findOneAndUpdate({ 'poll._id': req.poll.id },{ $push: { options: req.option }})
 			.exec(function (err, result) {
