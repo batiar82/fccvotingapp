@@ -13,11 +13,15 @@
 		<div class="container">
 			<h2>Below are polls you own<br />
 			Select a poll to see the results and vote, or sign-in to make a new poll.</h3>
-			<ul>
+			<div class="list-group">
 				{% for poll in polls %}
-				<li><a href="/poll/{{poll._id}}">{{poll.question}}</a><a href="">(Delete)</a></li>
+					<a href=/poll/{{poll._id}} class="list-group-item">
+        				<h4 class="list-group-item-heading">{{poll.question}}</h4>
+        				<p class="list-group-item-text">A question created by {{poll.creator.github.username}}.</p>
+    				</a>
+				
 				{%endfor%}
-			</ul>
+			</div>
 			
 		</div>
 		{% endblock %}

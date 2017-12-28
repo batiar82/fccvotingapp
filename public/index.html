@@ -16,7 +16,7 @@
 				{% for poll in polls %}
 					<a href=/poll/{{poll._id}} class="list-group-item">
         				<h4 class="list-group-item-heading">{{poll.question}}</h4>
-        				<p class="list-group-item-text">A question created by {{poll._creator}}.</p>
+        				<p class="list-group-item-text">A question created by {{poll.creator.github.username}}.</p>
     				</a>
 				
 				{%endfor%}

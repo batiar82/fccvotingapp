@@ -8,7 +8,7 @@ function PollHandler () {
 
 	this.getPolls = function (req, res) {
 		Polls
-			.find({}).exec(function(err, polls) {
+			.find({}).populate('creator').exec(function(err, polls) {
 				if (err) { throw err; }
 				res.render('index.html',{polls: polls});
 			});
@@ -20,7 +20,7 @@ function PollHandler () {
 		console.log("Me piden crear un nuevo poll: "+req.user.github.id+" question: "+req.body.question+" options: "+req.body.option+" req option: "+req.option);
 		var newPoll = new Polls();
 					
-					newPoll._creator = req.user.github.id;
+					newPoll.creator = req.user._id;
 					newPoll.question = req.body.question;
 					newPoll.options = req.body.option;
 					//Borro el ultimo que viene vacio, habria que sacarlo y que directamente no lo mande el form
@@ -82,7 +82,7 @@ function PollHandler () {
 	this.getMyPolls = function (req, res) {
 		console.log("Busco mis polls "+req.user.github.id);
 		Polls
-		.find({"_creator": req.user.github.id}).exec(function(err, polls) {
+		.find({"creator": req.user._id}).exec(function(err, polls) {
 				if (err) { throw err; }
 				res.render('mypolls.html',{polls: polls});
 			});
