@@ -15,8 +15,6 @@ function PollHandler () {
 	};
 
 	this.addPoll = function (req, res) {
-		console.log("es array: "+Array.isArray(req.body.option));
-		console.log("Separo "+req.body.option.length);
 		console.log("Me piden crear un nuevo poll: "+req.user.github.id+" question: "+req.body.question+" options: "+req.body.option+" req option: "+req.option);
 		var newPoll = new Polls();
 					
@@ -37,12 +35,13 @@ function PollHandler () {
 	};
 
 	this.addOption = function (req, res) {
-		console.log("Body: "+req.body+"  "+req.body.option+" req option: "+req.option);
 		Polls
-			.findOneAndUpdate({ 'poll._id': req.poll.id },{ $push: { options: req.option }})
+			.findByIdAndUpdate(req.body.id,{ $push: { options: req.body.option, votes: 0 }},{new: true})
 			.exec(function (err, result) {
-					if (err) { throw err; }
-
+					if (err) { 
+						console.log("Error");
+						throw err; }
+					console.log("voy a mandar el resultado "+result);
 					res.json(result);
 				}
 			);
@@ -58,7 +57,6 @@ function PollHandler () {
 			);
 	};
 	this.vote = function (req, res) {
-		console.log("Tengo que votar el poll: "+req.params.id+" Opcion "+req.body.option);
 		var optionObject={};
 		optionObject['votes.'+parseInt(req.body.option)]=1;
 		console.log(optionObject);
@@ -74,15 +72,18 @@ function PollHandler () {
 	this.getPoll = function (req, res) {
 		console.log("Busco el poll con id "+req.params.id);
 		Polls
-		.findById(req.params.id).exec(function(err, poll) {
+		.findById(req.params.id).populate('creator').exec(function(err, poll) {
 				if (err) { throw err; }
-				res.render('poll.html',{poll: poll});
+				var canAdd=false;
+				if(req.user!= undefined && poll.creator._id.equals(req.user._id))
+					canAdd=true;
+				res.render('poll.html',{poll: poll, canAdd: canAdd});
 			});
 	};
 	this.getMyPolls = function (req, res) {
 		console.log("Busco mis polls "+req.user.github.id);
 		Polls
-		.find({"creator": req.user._id}).exec(function(err, polls) {
+		.find({"creator": req.user._id}).populate('creator').exec(function(err, polls) {
 				if (err) { throw err; }
 				res.render('mypolls.html',{polls: polls});
 			});

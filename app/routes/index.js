@@ -78,6 +78,8 @@ module.exports = function (app, passport) {
 			//res.render('poll.html',{options});
 			//res.sendFile(path + '/public/poll.html');
 	//	});
-	app.route('/api/poll/:id')
+	app.route('/api/poll/vote/:id')
 		.post(pollHandler.vote)
+	app.route('/api/poll/addOption')
+		.post(isLoggedIn,pollHandler.addOption);
 };
