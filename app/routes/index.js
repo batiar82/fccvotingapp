@@ -10,6 +10,7 @@ module.exports = function (app, passport) {
 		if (req.isAuthenticated()) {
 			console.log("Entro a poner el true en auth");
 			res.locals.auth=true;
+			
 			app.locals.auto=true;
 			res.app.locals.autori=true;
 			return next();
