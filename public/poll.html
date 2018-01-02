@@ -9,7 +9,7 @@
 			<span id="forChart" data-votes="{{poll.votes}}" data-options="{{poll.options}}" data-question="{{poll.question}}"></span>
 			<form action="/api/poll/vote/{{poll._id}}" method="post">
 				<label for="options">I'd like to vote for...:</label>
-				<select name="option">
+				<select name="option" id="theselect">
   					{% for option in poll.options %}
   					<option value="{{loop.index0}}">{{option}}</option>
   					{% endfor %}
@@ -41,7 +41,7 @@
     	{% endblock %}
     	{% block scripts %}
     	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<script type="text/javascript" src="/controllers/aPollController.client.js"></script>
+	<!--	<script type="text/javascript" src="/controllers/aPollController.client.js"></script> -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 		<script type="text/javascript" src="/controllers/addOptionController.client.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

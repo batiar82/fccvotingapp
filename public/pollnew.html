@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% set title = 'FCC Voting App' %}
+{% extends '_layout.html' %}
+
+	<body>
+		{% block content %}
+		<div class="container">
+			<h2><span class="question"></span></h2>
+			<span id="forJquery" data-id="{{id}}"></span>
+				<label for="options">I'd like to vote for...:</label>
+				<select name="option" id="theselect">
+				</select>
+				<button type="submit" id="submitVote" class="btn btn-add">Vote!</button>
+				<a class="btn btn-add" target="_blank" href="https://twitter.com/intent/tweet?text=Hi%20I%20Just%20made%20a%20vote%20in%20https://fccdinamicweb-bati.c9users.io/api/poll/{{id}}">
+					<i class="fa fa-twitter"></i> Share
+				</a>
+				{%if isAuthenticated %}
+				<button type="submit" id="delete" class="btn btn-danger">Delete poll</button>
+				{% endif %}
+		</div>
+		
+		{%if isAuthenticated %}
+			<div class="container">
+				<label for="options">Add option:</label>
+				<input type="text" class="form-control theoption" name="option" placeholder="Option"/>
+				<button type="submit" id="addOption" class="btn btn-add">Add</button>
+			</div>
+		{% endif %}
+		<div id="canvas-holder" style="width:40%">
+        	<canvas id="chart-area" />
+    	</div>
+    	{% endblock %}
+    	{% block scripts %}
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+		<script type="text/javascript" src="/controllers/aPollController.client.js"></script>
+		<!--<script type="text/javascript" src="/controllers/addOptionController.client.js"></script>-->
+		
+		
+	    	{% endblock %}	
+	</body>
+</html>

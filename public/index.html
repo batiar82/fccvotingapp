@@ -3,18 +3,19 @@
 {% extends '_layout.html' %}
 
 		{% block content %}
-		<div class="container">
-			<div class="btn-container">
-				<a href="/addPoll" class="btn btn-add">Add Poll!</a>
-				
-			</div>
+		{%if isAuthenticated%}
+			<div class="container">
+				<div class="btn-container">
+					<a href="/addPoll" class="btn btn-add">Add Poll!</a>
+				</div>
+		{%endif%}
 		</div>
 		<div class="container">
 			<h2>Below are polls hosted by fcc-voting.<br />
 			Select a poll to see the results and vote, or sign-in to make a new poll.</h3>
 			<div class="list-group">
 				{% for poll in polls %}
-					<a href=/poll/{{poll._id}} class="list-group-item">
+					<a href=/poll/get/{{poll._id}} class="list-group-item">
         				<h4 class="list-group-item-heading">{{poll.question}}</h4>
         				<p class="list-group-item-text">A question created by {{poll.creator.github.username}}.</p>
     				</a>

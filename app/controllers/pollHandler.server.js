@@ -47,12 +47,26 @@ function PollHandler () {
 			);
 	};
 	this.deletePoll = function (req, res) {
+		var response={success:false,error:""};
 		Polls
-			.findOneAndRemove({ 'poll._id': req.poll.id })
+			.findById(req.body.id).populate('creator')
 			.exec(function (err, result) {
-					if (err) { throw err; }
-
-					res.json(result);
+					if (err) { 
+						throw err;
+						response.error="Poll not found";
+						res.json(response);
+					}
+					else
+						if (result.creator._id.equals(req.user._id)){ 
+							result.remove();
+							response.success=true;
+							
+						}else{
+							response.error="Only creator can delete a poll";
+							
+						}
+						res.json(response);
+						
 				}
 			);
 	};
@@ -65,7 +79,7 @@ function PollHandler () {
 			.findByIdAndUpdate(req.params.id,{ $inc: optionObject},{new: true},function (err, result) {
 					if (err) { throw err; }
 					//this.getPoll
-					res.render('poll.html',{poll: result});
+					res.json(result);
 				}
 			);
 	};
@@ -78,6 +92,15 @@ function PollHandler () {
 				if(req.user!= undefined && poll.creator._id.equals(req.user._id))
 					canAdd=true;
 				res.render('poll.html',{poll: poll, canAdd: canAdd});
+			});
+	};
+	this.getPollJson = function (req, res) {
+		console.log("Busco el poll con id "+req.params.id+" para la api");
+		Polls
+		.findById(req.params.id).populate('creator').exec(function(err, poll) {
+				if (err) { throw err; }
+				console.log("Devuelvo  "+poll);
+				res.json(poll);
 			});
 	};
 	this.getMyPolls = function (req, res) {

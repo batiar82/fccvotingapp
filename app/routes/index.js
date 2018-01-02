@@ -9,16 +9,38 @@ module.exports = function (app, passport) {
 	function isLoggedIn (req, res, next) {
 		if (req.isAuthenticated()) {
 			console.log("Entro a poner el true en auth");
-			app.locals.auth="true";
+			res.locals.auth=true;
+			app.locals.auto=true;
+			res.app.locals.autori=true;
 			return next();
 		} else {
 			res.redirect('/login');
 		}
 	}
+	function isLoggedInForApi (req, res, next) {
+		if (req.isAuthenticated()) {
+			return next();
+		} else {
+			res.json({error:"Not allowed"});
+		}
+	}
+/*	function meterVar(req,res,next){
+		console.log("Meto variable");
+		res.locals.autorizo=true;
+		return next();
+	}
+*/	
 
 	var clickHandler = new ClickHandler();
 	var pollHandler = new PollHandler();
 
+	app.use(function (req, res, next) {
+		console.log('Time:', Date.now());
+		res.locals.isAuthenticated=req.isAuthenticated() || false;
+		if (req.isAuthenticated())
+			res.locals.loggedUser=req.user;
+	next();
+	});
 	app.route('/')
 		.get(pollHandler.getPolls)
 			//res.sendFile(path + '/public/index.html');
@@ -82,4 +104,13 @@ module.exports = function (app, passport) {
 		.post(pollHandler.vote)
 	app.route('/api/poll/addOption')
 		.post(isLoggedIn,pollHandler.addOption);
+	app.route('/api/poll/delete')
+		.post(isLoggedInForApi,pollHandler.deletePoll);
+	app.route('/poll/api/:id')
+		.get(pollHandler.getPollJson);
+	app.route('/poll/get/:id')
+		.get(function (req, res) {
+			//res.locals.auth2=true;
+			res.render('pollnew.html',{id: req.params.id});
+		});
 };
