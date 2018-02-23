@@ -7,6 +7,7 @@ var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
+var cors = require('cors')
 
 var app = express();
 require('dotenv').load();
@@ -21,7 +22,7 @@ app.use('/common', express.static(process.cwd() + '/app/common'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(cors());
 app.use(session({
 	secret: 'secretClementine',
 	resave: false,

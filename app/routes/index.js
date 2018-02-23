@@ -3,7 +3,7 @@
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var PollHandler = require(path + '/app/controllers/pollHandler.server.js');
-
+var cors = require('cors')
 module.exports = function (app, passport) {
 
 	function isLoggedIn (req, res, next) {
@@ -113,5 +113,20 @@ module.exports = function (app, passport) {
 		.get(function (req, res) {
 			//res.locals.auth2=true;
 			res.render('pollnew.html',{id: req.params.id});
+		});
+	//Para Nughtlife app
+	app.route('/bars/:city')
+		.get(cors(),function (req, res) {
+			//res.locals.auth2=true;
+			console.log("Busco bares en "+req.params.city);
+			var bars=[
+			{id: 1, imgUrl:"https://s3-media3.fl.yelpcdn.com/bphoto/o41DEnuTajmpIdOOffuD3g/ms.jpg", nombre:"Verne Club", comentario:"We had a phenomenal experience at Verne Club last week while visiting Buenos Aires. There are a number of 'speakeasy' type of bars in BA and they love the..."				
+			},{
+				id: 2, imgUrl:"https://s3-media2.fl.yelpcdn.com/bphoto/U-8a8KjrMHheD6pXtISAog/ms.jpg", nombre:"Doppleganger", comentario:"I was in Argentina for a few days and wanted to check out the night life. Food- amazing drinks. I didn't eat much but I did. Have the guacamole and chips.."
+			},{
+				id: 3, imgUrl:"https://s3-media4.fl.yelpcdn.com/bphoto/R--geuo6sBvZKzvyozx6lA/ms.jpg", nombre:"Floreria atlantico", comentario:"Nice little hidden gem. Couldn't tell the under ground bar from surface, great food, awesome drinks. A must when at Buenos Aires Argentina."
+			}			
+		];
+			res.json(bars);
 		});
 };
