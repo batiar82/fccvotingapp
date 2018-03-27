@@ -1,6 +1,6 @@
 'use strict';
 console.log("----------------");
-console.log("**************   "+process.env.PORT);
+console.log("**************   "+process.env.PORT===8080);
 console.log("----------------");
 var express = require('express');
 var routes = require('./app/routes/index.js');
