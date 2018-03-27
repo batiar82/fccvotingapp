@@ -3,7 +3,7 @@
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var PollHandler = require(path + '/app/controllers/pollHandler.server.js');
-var cors = require('cors')
+//var cors = require('cors')
 module.exports = function (app, passport) {
 
 	function isLoggedIn (req, res, next) {
@@ -116,7 +116,7 @@ module.exports = function (app, passport) {
 		});
 	//Para Nughtlife app
 	app.route('/bars/:city')
-		.get(cors(),function (req, res) {
+		.get(function (req, res) {
 			//res.locals.auth2=true;
 			console.log("Busco bares en "+req.params.city);
 			var bars=[
