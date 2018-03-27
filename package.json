@@ -24,7 +24,7 @@
   "author": "Blake Johnston",
   "license": "MIT",
   "dependencies": {
-    "cors": "^2.8.4",
+    
     "express": "^4.12.4",
     "express-session": "^1.11.3",
     "foreman": "^2.0.0",
