@@ -1,5 +1,7 @@
 'use strict';
-
+console.log("----------------");
+console.log("**************   "+process.env);
+console.log("----------------");
 var express = require('express');
 var routes = require('./app/routes/index.js');
 var mongoose = require('mongoose');
@@ -34,7 +36,6 @@ app.use(passport.session());
 
 routes(app, passport);
 
-console.log("**************   "+process.env.PORT);
 var port = 8080;
 app.listen(port,  function () {
 	console.log('Node.js listening on port ' + port + '...');
