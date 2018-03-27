@@ -10,7 +10,7 @@ var nunjucks = require('nunjucks');
 var cors = require('cors')
 
 var app = express();
-require('dotenv').load();
+//require('dotenv').load();
 require('./app/config/passport')(passport);
 nunjucks.configure('public', {autoescape: true, express: app });
 mongoose.connect(process.env.MONGO_URI, {useMongoClient: true});
